@@ -21,22 +21,22 @@ def create_contact():
     phone_pattern = "^\+?(\d{1,3})?[-.\s]?(\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9})$"
     email_pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
     
-    if not first_name or not last_name or not email or not phone_number:
-        return jsonify({"message": "You must include a first name, last name and email."}), 400
+    errors = {}
     
-    if not re.match(email_pattern, email):
-        return jsonify({"message": "Invalid email address."}), 400
+    if not first_name or not re.match(name_pattern, first_name):
+        errors["firstname"] = "Invalid first name."
+
+    if not last_name or not re.match(name_pattern, last_name):
+        errors["lastname"] = "Invalid last name."
+
+    if not email or not re.match(email_pattern, email):
+        errors["email"] = "Invalid email address."
+
+    if not phone_number or not re.match(phone_pattern, phone_number):
+        errors["phoneNumber"] = "Invalid phone number."
     
-    if not re.match(phone_pattern, phone_number):
-        return jsonify({"message": "Invalid phone number."}), 400
-    
-    if not re.match(name_pattern, first_name):
-        return jsonify({"message": "Invalid first name."}), 400
-    
-    if not re.match(name_pattern, last_name):
-        return jsonify({"message": "Invalid last name."}), 400
-    
-    
+    if errors:
+        return jsonify({"errors": errors}), 400
 
     new_contact = Contact(first_name=first_name, last_name=last_name, email=email, phone_number=phone_number)
     try:
@@ -66,20 +66,22 @@ def update_contact(user_id):
     phone_pattern = "^\+?(\d{1,3})?[-.\s]?(\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9})$"
     email_pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
     
-    if not first_name or not last_name or not email or not phone_number:
-        return jsonify({"message": "You must include a first name, last name and email."}), 400
-    
-    if not re.match(email_pattern, email):
-        return jsonify({"message": "Invalid email address."}), 400
-    
-    if not re.match(phone_pattern, phone_number):
-        return jsonify({"message": "Invalid phone number."}), 400
-    
-    if not re.match(name_pattern, first_name):
-        return jsonify({"message": "Invalid first name."}), 400
-    
-    if not re.match(name_pattern, last_name):
-        return jsonify({"message": "Invalid last name."}), 400
+    errors = {}
+
+    if not first_name or not re.match(name_pattern, first_name):
+        errors["firstname"] = "Invalid first name."
+
+    if not last_name or not re.match(name_pattern, last_name):
+        errors["lastname"] = "Invalid last name."
+
+    if not email or not re.match(email_pattern, email):
+        errors["email"] = "Invalid email address."
+
+    if not phone_number or not re.match(phone_pattern, phone_number):
+        errors["phoneNumber"] = "Invalid phone number."
+
+    if errors:
+        return jsonify({"errors": errors}), 400
     
     
     contact.first_name = data.get("firstname", contact.first_name)
