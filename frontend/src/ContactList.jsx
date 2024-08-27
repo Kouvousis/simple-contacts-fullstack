@@ -42,7 +42,7 @@ const ContactList = ({
               <th className="table-cell border">Last Name</th>
               <th className="table-cell border">Email</th>
               <th className="table-cell border">Phone Number</th>
-              <th className="table-cell border">Actions</th>
+              <th className="table-cell border">Edit / Delete</th>
             </tr>
           </thead>
           <tbody className="table-row-group text-center">
