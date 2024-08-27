@@ -9,10 +9,21 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
     existingContact.phoneNumber || ""
   );
 
+  const [firstnameError, setFirstnameError] = useState("");
+  const [lastnameError, setLastnameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
+
   const updating = Object.entries(existingContact).length !== 0;
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    // Reset error states
+    setFirstnameError("");
+    setLastnameError("");
+    setEmailError("");
+    setPhoneNumberError("");
 
     const data = {
       firstname,
@@ -31,9 +42,15 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
       body: JSON.stringify(data),
     };
     const response = await fetch(url, options);
+    const result = await response.json();
+
     if (response.status !== 201 && response.status !== 200) {
-      const data = await response.json();
-      alert(data.message);
+      if (result.errors) {
+        setFirstnameError(result.errors.firstname || "");
+        setLastnameError(result.errors.lastname || "");
+        setEmailError(result.errors.email || "");
+        setPhoneNumberError(result.errors.phoneNumber || "");
+      }
     } else {
       updateCallback();
     }
@@ -61,8 +78,13 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
             id="firstname"
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
-            className="p-1 pl-2 rounded"
+            className={`p-1 pl-2 rounded ${
+              firstnameError ? "border border-red-500 outline-none" : ""
+            }`}
           />
+          {firstnameError && (
+            <p className="text-red-500 text-sm">{firstnameError}</p>
+          )}
         </div>
         <div className="flex items-center space-x-2">
           <label className="w-1/4 text-white" htmlFor="lastname">
@@ -73,8 +95,13 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
             id="lastname"
             value={lastname}
             onChange={(e) => setLastname(e.target.value)}
-            className="rounded p-1 pl-2"
+            className={`rounded p-1 pl-2 ${
+              lastnameError ? "border border-red-500 outline-none" : ""
+            }`}
           />
+          {lastnameError && (
+            <p className="text-red-500 text-sm">{lastnameError}</p>
+          )}
         </div>
         <div className="flex items-center space-x-2">
           <label className="w-1/4 text-white" htmlFor="email">
@@ -85,8 +112,11 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded p-1 pl-2"
+            className={`rounded p-1 pl-2 ${
+              emailError ? "border border-red-500 outline-none" : ""
+            }`}
           />
+          {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
         </div>
         <div className="flex items-center space-x-2">
           <label className="w-1/4 text-white" htmlFor="email">
@@ -97,8 +127,13 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
             id="phoneNumber"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            className="rounded p-1 pl-2"
+            className={`rounded p-1 pl-2 ${
+              phoneNumberError ? "border border-red-500 outline-none" : ""
+            }`}
           />
+          {phoneNumberError && (
+            <p className="text-red-500 text-sm">{phoneNumberError}</p>
+          )}
         </div>
         <button
           className="self-end px-2 py-1 text-white bg-slate-500 rounded hover:text-gray-600"
