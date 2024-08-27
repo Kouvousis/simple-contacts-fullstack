@@ -71,7 +71,7 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
       <form className="flex flex-col space-y-4" onSubmit={onSubmit}>
         <div className="flex items-center space-x-2">
           <label className="w-1/4 text-white" htmlFor="firstname">
-            First Name:
+            First Name*:
           </label>
           <input
             type="text"
@@ -88,7 +88,7 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
         </div>
         <div className="flex items-center space-x-2">
           <label className="w-1/4 text-white" htmlFor="lastname">
-            Last Name:
+            Last Name*:
           </label>
           <input
             type="text"
@@ -105,7 +105,7 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
         </div>
         <div className="flex items-center space-x-2">
           <label className="w-1/4 text-white" htmlFor="email">
-            Email:
+            Email*:
           </label>
           <input
             type="text"
@@ -120,7 +120,7 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
         </div>
         <div className="flex items-center space-x-2">
           <label className="w-1/4 text-white" htmlFor="email">
-            Phone number:
+            Phone number*:
           </label>
           <input
             type="text"
@@ -134,6 +134,9 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
           {phoneNumberError && (
             <p className="text-red-500 text-sm">{phoneNumberError}</p>
           )}
+        </div>
+        <div className="flex items-center">
+          <span className="text-white text-sm italic">* Required Fields</span>
         </div>
         <button
           className="self-end px-2 py-1 text-white bg-slate-500 rounded hover:text-gray-600"
