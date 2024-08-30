@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { X } from "lucide-react";
 
-const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
+const ContactForm = ({ existingContact = {}, updateCallback }) => {
   const [firstname, setFirstname] = useState(existingContact.firstname || "");
   const [lastname, setLastname] = useState(existingContact.lastname || "");
   const [email, setEmail] = useState(existingContact.email || "");
@@ -57,14 +56,7 @@ const ContactForm = ({ existingContact = {}, updateCallback, closeModal }) => {
   };
 
   return (
-    <div className="w-full max-w-lg p-6 flex flex-col rounded bg-slate-700 shadow-lg">
-      <button
-        onClick={closeModal}
-        type="button"
-        className="self-end text-white hover:text-gray-600"
-      >
-        <X />
-      </button>
+    <div className="w-full max-w-lg p-4 flex flex-col rounded-b bg-slate-700 shadow-lg">
       <div className="flex flex-col mb-3 text-white text-center">
         <span>Create new contact</span>
       </div>

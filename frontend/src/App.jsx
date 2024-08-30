@@ -50,11 +50,10 @@ function App() {
           openCreateModal={openCreateModal}
         />
 
-        <Modal isOpen={isModalOpen}>
+        <Modal isOpen={isModalOpen} closeModal={closeModal}>
           <ContactForm
             existingContact={currentContact}
             updateCallback={onUpdate}
-            closeModal={closeModal}
           />
         </Modal>
 
