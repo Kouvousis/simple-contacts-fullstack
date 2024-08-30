@@ -3,6 +3,7 @@ import "./App.css";
 import ContactList from "./ContactList";
 import ContactForm from "./ContactForm";
 import Footer from "./Footer";
+import Modal from "./Modal";
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -49,21 +50,14 @@ function App() {
           openCreateModal={openCreateModal}
         />
 
-        {isModalOpen && (
-          <div>
-            <div
-              className={`fixed inset-0 flex flex-col justify-center items-center transition-colors ${
-                open ? "visible bg-black/40" : "invisible"
-              }`}
-            >
-              <ContactForm
-                existingContact={currentContact}
-                updateCallback={onUpdate}
-                closeModal={closeModal}
-              />
-            </div>
-          </div>
-        )}
+        <Modal isOpen={isModalOpen}>
+          <ContactForm
+            existingContact={currentContact}
+            updateCallback={onUpdate}
+            closeModal={closeModal}
+          />
+        </Modal>
+
         <Footer />
       </div>
     </>
