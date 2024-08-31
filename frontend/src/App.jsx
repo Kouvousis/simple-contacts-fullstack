@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import ContactList from "./ContactList";
-import ContactForm from "./ContactForm";
-import Footer from "./Footer";
-import Modal from "./Modal";
+import ContactList from "./components/ContactList";
+import ContactForm from "./components/ContactForm";
+import Footer from "./components/Footer";
+import Modal from "./components/Modal";
+import Navbar from "./components/Navigation";
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -42,13 +43,18 @@ function App() {
 
   return (
     <>
-      <div className="bg-slate-700 min-h-screen">
-        <ContactList
-          contacts={contacts}
-          updateContact={openEditModal}
-          updateCallBack={onUpdate}
-          openCreateModal={openCreateModal}
-        />
+      <div className="bg-slate-700 min-h-screen flex flex-col">
+        <div className="">
+          <Navbar />
+        </div>
+        <div>
+          <ContactList
+            contacts={contacts}
+            updateContact={openEditModal}
+            updateCallBack={onUpdate}
+            openCreateModal={openCreateModal}
+          />
+        </div>
 
         <Modal isOpen={isModalOpen} closeModal={closeModal}>
           <ContactForm

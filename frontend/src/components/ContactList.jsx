@@ -28,12 +28,6 @@ const ContactList = ({
 
   return (
     <div className="flex flex-col text-white">
-      <div className="flex flex-row space-x-2 items-center justify-center mb-4 mt-2">
-        <h2 className="text-2xl  font-semibold subpixel-antialiased">
-          Contacts
-        </h2>
-        <CircleUserRound className="mt-1" />
-      </div>
       <div className="flex justify-center">
         <table className="table border-spacing-1 w-2/3">
           <thead className="table-header-group">
